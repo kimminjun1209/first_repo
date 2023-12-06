@@ -4,3 +4,4 @@ finance-datareader
 matplotlib 
 plotly
 pyxlsb
+beautifulsoup4
