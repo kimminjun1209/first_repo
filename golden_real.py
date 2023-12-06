@@ -72,8 +72,8 @@ def plot_golden_dead_cross(df):
     fig = go.Figure()
 
     fig.add_trace(go.Scatter(x=df.index, y=df['Close'], mode='lines', name='종가'))
-    fig.add_trace(go.Scatter(x=df.index, y=df['Short_MA'], mode='lines', name='단기 이동평균선'))
-    fig.add_trace(go.Scatter(x=df.index, y=df['Long_MA'], mode='lines', name='장기 이동평균선'))
+    fig.add_trace(go.Scatter(x=df.index, y=df['Short_MA'], mode='lines', name='단기 이동평균선(5day)'))
+    fig.add_trace(go.Scatter(x=df.index, y=df['Long_MA'], mode='lines', name='장기 이동평균선(20day)'))
 
     golden_cross_points = df[(df['Short_MA'] > df['Long_MA']) & (df['Short_MA'].shift(1) <= df['Long_MA'].shift(1))].index
     dead_cross_points = df[(df['Short_MA'] < df['Long_MA']) & (df['Short_MA'].shift(1) >= df['Long_MA'].shift(1))].index
