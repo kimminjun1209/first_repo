@@ -41,18 +41,21 @@ def main():
         else:
             st.error("입력한 기업의 정보를 찾을 수 없습니다.")
 
+#단기이동평균,장기이동평균 계산 함수
 def get_stock_data(stock_code, start_date, end_date):
     df = fdr.DataReader(stock_code, start_date, end_date)
     df['Short_MA'] = df['Close'].rolling(window=5).mean()
     df['Long_MA'] = df['Close'].rolling(window=20).mean()
     return df
 
+#입력받은 기억명의 종목코드 반환 함수
 def get_ticker_symbol(company_name):
     df = get_stock_info()
     code = df[df['회사명'] == company_name]['종목코드'].values
     ticker_symbol = code[0] if len(code) > 0 else None
     return ticker_symbol
 
+#KRX 기업정보 스크래핑 및 데이터프레임으로 변환
 def get_stock_info():
     base_url = "http://kind.krx.co.kr/corpgeneral/corpList.do"
     method = "download"
@@ -62,6 +65,7 @@ def get_stock_info():
     df = df[['회사명', '종목코드']]
     return df
 
+#입력받은 주식 데이터프레임을 사용하여 주식의 종가 및 이동평균 데이터 시각화
 def plot_golden_dead_cross(df):
     st.subheader("골든크로스와 데드크로스 시각화")
     fig = go.Figure()
@@ -90,6 +94,7 @@ def plot_golden_dead_cross(df):
 
     st.plotly_chart(fig)
 
+#골든크로스 발생한 지점부터 일정 기간 후 주식 수익률을 box plot으로 시각화
 def plot_golden_cross_returns(df, start_date, end_date):
     st.subheader("골든크로스 매매 후 수익률 변화")
     golden_cross_points = df[(df['Short_MA'] > df['Long_MA']) & (df['Short_MA'].shift(1) <= df['Long_MA'].shift(1))].index
@@ -124,6 +129,8 @@ def plot_golden_cross_returns(df, start_date, end_date):
 
     st.plotly_chart(fig)
 
+
+#데드크로스 발생한 지점부터 일정 기간 후 주식 수익률을 box plot으로 시각화
 def plot_dead_cross_returns(df, start_date, end_date):
     st.subheader("데드크로스 매매 후 수익률 변화")
     dead_cross_points = df[(df['Short_MA'] < df['Long_MA']) & (df['Short_MA'].shift(1) >= df['Long_MA'].shift(1))].index
@@ -158,6 +165,7 @@ def plot_dead_cross_returns(df, start_date, end_date):
 
     st.plotly_chart(fig)
 
+#csv 버튼
 def download_csv_button(df, filename):
     csv_data = df.to_csv(index=False, encoding='utf-8')
     b64 = base64.b64encode(csv_data.encode()).decode()
