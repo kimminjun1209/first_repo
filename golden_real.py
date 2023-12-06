@@ -27,7 +27,7 @@ def main():
             format="YYYY-MM-DD",
         )
 
-    accept = st.sidebar.button("골든크로스/데드크로스 시각화")
+    accept = st.sidebar.button("START")
 
     if accept and company:
         ticker_symbol = get_ticker_symbol(company)
