@@ -6,3 +6,4 @@ plotly
 pyxlsb
 beautifulsoup4
 html5lib
+openpyxl
