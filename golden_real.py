@@ -56,6 +56,7 @@ def get_ticker_symbol(company_name):
     return ticker_symbol
 
 #KRX 기업정보 스크래핑 및 데이터프레임으로 변환
+@st.cache_data
 def get_stock_info():
     base_url = "http://kind.krx.co.kr/corpgeneral/corpList.do"
     method = "download"
