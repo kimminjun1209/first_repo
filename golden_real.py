@@ -6,7 +6,7 @@ from io import BytesIO
 import base64
 
 def main():
-    st.header('주식 골든크로스와 데드크로스 시각화')
+    st.header('돈을 똑똑하게 벌어보자!')
     st.sidebar.markdown('분석할 기업을 선택하세요')
 
     with st.sidebar:
